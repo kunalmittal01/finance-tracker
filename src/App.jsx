@@ -55,6 +55,16 @@ function App() {
       
       case "UPDATE_TRANSACTION":
         const updatedTransactions = state.transactions.filter(item=>item.id != action.payload);
+        const item = state.transactions.filter(item=>item.id == action.payload);
+        if(item.type == 'Expense') {
+          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance+Number(item.amount), totalExpense: state.totalExpense-Number(item.amount)}  
+        }
+        else if(item.type == 'Income') {
+          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance-Number(item.amount), totalIncome: state.totalIncome-Number(item.amount)}
+        }
+        if(updatedTransactions.length == 0) {
+          return {...state, transactions: updatedTransactions, currentBalance: 0, totalIncome: 0, totalExpense: 0}  
+        }
         return {...state, transactions: updatedTransactions}  
 
       default:

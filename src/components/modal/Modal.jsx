@@ -50,6 +50,10 @@ const Modal = ({importData})=>{
             console.log(ref.id);
             toast.success("Added transaction");
             fetchTransaction();
+            transaction.name= ""
+            transaction.amount= ""
+            transaction.date= ""
+            transaction.tag= ""
         }
         catch(e) {
             console.error(e);
@@ -102,15 +106,15 @@ const Modal = ({importData})=>{
                 <div className="modal-form">
                     <div className="modal-field">
                         <p>Name</p>
-                        <input onChange={(e)=> handleTransaction(e,'name')} type="text" placeholder="Enter Name" required/>
+                        <input value={transaction.name} onChange={(e)=> handleTransaction(e,'name')} type="text" placeholder="Enter Name" required/>
                     </div>
                     <div className="modal-field">
                         <p>Amount</p>
-                        <input onChange={(e)=> handleTransaction(e,'amount')} type="number" placeholder="Enter Amount" required/>
+                        <input value={transaction.amount} onChange={(e)=> handleTransaction(e,'amount')} type="number" placeholder="Enter Amount" required/>
                     </div>
                     <div className="modal-field">
                         <p>Date</p>
-                        <input onChange={(e)=> handleTransaction(e,'date')} type="date" placeholder="Enter Date" required/>
+                        <input value={transaction.date} onChange={(e)=> handleTransaction(e,'date')} type="date" placeholder="Enter Date" required/>
                     </div>
                     <div className="modal-field">
                         <p>Tag</p>
