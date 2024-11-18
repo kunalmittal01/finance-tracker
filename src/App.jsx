@@ -29,7 +29,7 @@ function App() {
       case "SORT_BY_AMOUNT":
         console.log([...state.transactions]);
         const ar = [...state.transactions];
-        const sortedByAmount = ar.sort((a, b) => parseInt(a.amount) - parseInt(b.amount))
+        const sortedByAmount = ar.sort((a, b) => Number(a.amount) - Number(b.amount))
         console.log(sortedByAmount);
         
         return {
@@ -64,15 +64,15 @@ function App() {
         const updatedTransactions = state.transactions.filter(item=>item.id != action.payload);
         const item = state.transactions.find(item=>item.id == action.payload);
         if(item.type == 'Expense') {
-          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance+Number(item.amount), totalExpense: state.totalExpense-Number(item.amount)}  
+          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance+Number(item.amount), totalExpense: state.totalExpense-Number(item.amount),copyTransactions: updatedTransactions}  
         }
         else if(item.type == 'Income') {
-          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance-Number(item.amount), totalIncome: state.totalIncome-Number(item.amount)}
+          return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance-Number(item.amount), totalIncome: state.totalIncome-Number(item.amount),copyTransactions: updatedTransactions}
         }
         if(updatedTransactions.length == 0) {
-          return {...state, transactions: updatedTransactions, currentBalance: 0, totalIncome: 0, totalExpense: 0}  
+          return {...state, transactions: updatedTransactions, currentBalance: 0, totalIncome: 0, totalExpense: 0,copyTransactions: updatedTransactions}  
         }
-        return {...state, transactions: updatedTransactions}  
+        return {...state, transactions: updatedTransactions, copyTransactions: updatedTransactions}  
 
       default:
         return {...state}
