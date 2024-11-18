@@ -7,8 +7,7 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 
 const Table = ({query})=>{
     const ctx = useContext(context);
-    const [user] = useAuthState(auth)
-    console.log(query);
+    const [user] = useAuthState(auth);
 
     const deleteTx = async(txId)=>{
         try {
@@ -26,7 +25,7 @@ const Table = ({query})=>{
         }
     }
     const showData = ()=>{
-        const data = ctx.state.transactions.filter((item)=>{
+        const data = ctx.state?.transactions.filter((item)=>{
             if(query.dropdown=='all') {
                 return item.name.toLowerCase().includes(query.input?.toLowerCase())
             }
@@ -45,7 +44,7 @@ const Table = ({query})=>{
     }
     return (
         <>
-        {ctx.state.transactions.length !=0?
+        {ctx.state?.transactions.length !=0?
             <table>
             <thead>
                 <tr>

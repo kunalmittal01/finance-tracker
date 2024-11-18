@@ -34,6 +34,7 @@ const Modal = ({importData})=>{
             console.log({...docsData.docs[0].data(), id: docsData.docs[0].ref})
             docsData.docs.forEach(doc=>arr.push({...doc.data(), id: doc.ref.id}));
             SetTransactionData([...arr]);
+            
         }
         catch(e) {
             console.error(e);

@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import './App.css'
 import Signup from './pages/Signup'
@@ -27,14 +27,21 @@ function App() {
         return {...state, transactions: [...action.payload], copyTransactions: [...action.payload] }
       
       case "SORT_BY_AMOUNT":
-        const trans = state.transactions;
-        trans.sort((a, b) => Number(a.amount) - Number(b.amount));
-        return {...state, transactions: trans, active: {date: false, amt: true, nosort: false}}
+        console.log([...state.transactions]);
+        const ar = [...state.transactions];
+        const sortedByAmount = ar.sort((a, b) => parseInt(a.amount) - parseInt(b.amount))
+        console.log(sortedByAmount);
+        
+        return {
+          ...state,
+          transactions: sortedByAmount,
+          active: { date: false, amt: true, nosort: false },
+        };
 
       case "SORT_BY_DATE":
-        const t = state.transactions;
+        const t = [...state.transactions];
         t.sort((a, b) => new Date(a.date) - new Date(b.date));
-        return {...state, transactions: t, active: {date: true, amt: false, nosort: false}}
+        return {...state, transactions: [...t], active: {date: true, amt: false, nosort: false}}
 
       case "RESET_BALANCE":
         async function reset(){
@@ -55,7 +62,7 @@ function App() {
       
       case "UPDATE_TRANSACTION":
         const updatedTransactions = state.transactions.filter(item=>item.id != action.payload);
-        const item = state.transactions.filter(item=>item.id == action.payload);
+        const item = state.transactions.find(item=>item.id == action.payload);
         if(item.type == 'Expense') {
           return {...state, transactions: updatedTransactions, currentBalance: state.currentBalance+Number(item.amount), totalExpense: state.totalExpense-Number(item.amount)}  
         }
@@ -93,6 +100,9 @@ function App() {
     }
     }
   )
+  useEffect(() => {
+    console.log("Updated transactions:", state.transactions);
+  }, [state.transactions]);
   return (
     <>
       <ToastContainer />

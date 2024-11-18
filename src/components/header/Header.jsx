@@ -7,7 +7,6 @@ import { signOut } from "firebase/auth";
 const Header = ()=>{
     const navigate = useNavigate()
     const [user,loading] = useAuthState(auth);
-    console.log(user);
     useEffect(()=>{
         if(user) {
             navigate('/home')
